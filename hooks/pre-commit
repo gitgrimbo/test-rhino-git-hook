@@ -1,0 +1,31 @@
+#!/bin/sh
+
+if git-rev-parse --verify HEAD >/dev/null 2>&1; then
+    against=HEAD
+else
+    against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+fi
+ 
+# Redirect output to stderr.
+exec 1>&2
+
+# Set this to where your Rhino jar is.
+# Mine is on a Windows machine running Git Bash.
+RHINO_JAR=/C/java/rhino1_7R4/js.jar
+
+# For each changed file, run pre-commit.js via Rhino.
+# This could be slow, executing java/Rhino once per file.
+# Maybe we could pass all the changed files to pre-commit.js?
+for FILE in `git diff-index --name-only $against --` ; do
+    echo $FILE
+    java -classpath $RHINO_JAR org.mozilla.javascript.tools.shell.Main -opt 0 ./.git/hooks/pre-commit.js $FILE
+    rc=$?
+    echo "return code " $rc
+    if [[ $rc != 0 ]] ; then
+        exit $rc
+    fi
+done
+
+echo "All good!"
+
+exit
