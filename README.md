@@ -1,6 +1,12 @@
 # test-rhino-git-hook
 
-Experiment to use Rhino and Javascript in Git pre-commit hooks. The hook will invoke the linting provided by www.jshint.com.
+Experiment to use Rhino and Javascript in Git pre-commit hooks. The hook will invoke the Javascript linting provided by www.jshint.com.
+
+## Background
+
+Using Git Bash, version `1.8.1.msysgit.1` on Windows.
+
+Why Git Bash and not Git from a Windows DOS prompt? Git does not appear to support pre-commit hooks on Windows yet (http://stackoverflow.com/questions/12410164/github-for-windows-pre-commit-hook).
 
 ## Setup
 
@@ -55,7 +61,7 @@ if (!filename.match(/\.js$/)) {
 load("./.git/hooks/jshint-rhino-1.1.0.js");
 ```
 
-Copy `http://www.jshint.com/get/jshint-rhino-1.1.0.js` (or later version) to `YOUR_REPO/.git/hooks` (there is already a copy there for your convenience). This will perform the linting.
+Copy `http://www.jshint.com/get/jshint-rhino-1.1.0.js` (or later version) to `YOUR_REPO/.git/hooks` (there is already a copy in `THIS_REPO/hooks/` for your convenience). This will perform the linting.
 
 # Sample Output
 
